@@ -1,0 +1,18 @@
+/* A single, restrained typographic reveal. */
+.hero-copy{width: min(94vw, 1000px)}
+#hero-title .kinetic-title{display:flex;justify-content:center;align-items:baseline;white-space:nowrap;font-size:clamp(30px,5.8vw,88px);letter-spacing:-.045em}
+.my-word{display:inline-flex;align-items:baseline;position:relative;pointer-events:auto;appearance:none;border:0;border-radius:0;background:none;padding:0;margin:0;font:inherit;letter-spacing:inherit;line-height:inherit;cursor:pointer}
+.my-word::after{content:"";position:absolute;left:0;right:0;bottom:-.12em;border-bottom:1px dashed currentColor;opacity:.3}
+.name-fold{display:inline-grid;grid-template-columns:1fr;transition:grid-template-columns 600ms cubic-bezier(.22,1,.36,1),opacity 400ms;opacity:1}
+.name-fold>span{min-width:0;overflow:hidden;display:block;transform-origin:center;transition:transform 600ms cubic-bezier(.22,1,.36,1)}
+.kinetic-ready .name-fold{grid-template-columns:0fr;opacity:0}
+.kinetic-ready .name-fold>span{transform:scaleX(.35)}
+.kinetic-expanded .name-fold{grid-template-columns:1fr;opacity:1}
+.kinetic-expanded .name-fold>span{transform:scaleX(1)}
+.world-word{white-space:pre}
+.name-window{display:inline-block;vertical-align:bottom;height:1.5em;line-height:1.5;overflow:hidden;width:1.2em;transition:width 450ms cubic-bezier(.22,1,.36,1)}
+.name-reel{display:block;transition:transform 450ms cubic-bezier(.22,1,.36,1)}
+.name-reel>span{display:block;height:1.5em;white-space:nowrap}
+.kinetic-expanded .name-window{width:2.4em}
+.kinetic-expanded .name-reel{transform:translateY(-1.5em)}
+@media(prefers-reduced-motion:reduce){.name-fold,.name-fold>span,.name-window,.name-reel{transition:none}}
