@@ -1,0 +1,152 @@
+/* Shared glass track; selected segments deliberately remain matte. */
+:root{
+ --tab-ink:#3a3a3c;
+ --tab-selected:#deddd3;
+ --tab-hover:#e9e7dd99;
+ --tab-border:#c7c7cc99;
+ --tab-focus:#55555b;
+}
+:is(.glass-tabs,#year-filters,#type-filters).glass-tabs{
+ --tab-height:36px;
+ --tab-inset:5px;
+ display:inline-flex;
+ align-items:center;
+ flex-wrap:nowrap;
+ gap:0;
+ width:max-content;
+ max-width:100%;
+ min-width:0;
+ padding:var(--tab-inset);
+ border:1px solid var(--tab-border);
+ border-radius:calc(var(--tab-height)/2 + var(--tab-inset) + 1px);
+ background:linear-gradient(180deg,#ffffffb8 0%,#eeedf25c 42%,#ffffffa8 100%);
+ box-shadow:inset 0 1px 1px #fffffff2,inset 0 -1px 1px #ffffffcc,0 4px 12px #24242b0a;
+ -webkit-backdrop-filter:blur(20px) saturate(1.2);
+ backdrop-filter:blur(20px) saturate(1.2);
+ color:var(--tab-ink);
+ font-family:"Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif;
+ vertical-align:middle;
+}
+:is(.glass-tabs,#year-filters,#type-filters).glass-tabs>:is(a,button){
+ display:inline-flex;
+ align-items:center;
+ justify-content:center;
+ flex:0 0 auto;
+ min-width:0;
+ height:var(--tab-height);
+ min-height:var(--tab-height);
+ padding:0 16px;
+ margin:0;
+ border:0;
+ border-radius:calc(var(--tab-height)/2);
+ background:transparent;
+ color:var(--tab-ink);
+ box-shadow:none;
+ font:500 12px/1.2 "Helvetica Neue","PingFang SC","Microsoft YaHei",sans-serif;
+ letter-spacing:0;
+ white-space:nowrap;
+ text-decoration:none;
+ cursor:pointer;
+ transition:background-color .18s ease,color .18s ease;
+}
+:is(.glass-tabs,#year-filters,#type-filters).glass-tabs>:is(a,button):hover{
+ background:var(--tab-hover);
+ color:var(--tab-ink);
+}
+:is(.glass-tabs,#year-filters,#type-filters).glass-tabs>:is([aria-pressed=true],[aria-current=page],[aria-current=location]),
+:is(.glass-tabs,#year-filters,#type-filters).glass-tabs>:is([aria-pressed=true],[aria-current=page],[aria-current=location]):hover{
+ background:color-mix(in srgb,var(--tab-selected) 68%,transparent);
+ -webkit-backdrop-filter:brightness(.94);
+ backdrop-filter:brightness(.94);
+ color:var(--tab-ink);
+ font-weight:600;
+ box-shadow:none;
+}
+:is(.glass-tabs,#year-filters,#type-filters).glass-tabs>:is(a,button):focus-visible{
+ outline:2px solid var(--tab-focus);
+ outline-offset:-3px;
+}
+:is(.glass-tabs,#year-filters,#type-filters).glass-tabs>button:disabled{opacity:.35;cursor:default;background:transparent}
+.glass-tabs span,.glass-tabs small{color:inherit}
+.glass-tabs small{font-size:10px;opacity:.65}
+.graduation-project-links.glass-tabs{gap:0}
+.graduation-project-links.glass-tabs a{gap:6px}
+.graduation-project-nav{overflow:visible}
+#year-filters.glass-tabs{display:flex;flex:none;width:max-content;max-width:100%}
+#year-filters.glass-tabs::before,#year-filters.glass-tabs button::after{display:none}
+#year-filters.glass-tabs button{flex:1 0 auto}
+#type-filters.glass-tabs{overflow-x:auto;scrollbar-width:none}
+#type-filters.glass-tabs::-webkit-scrollbar{display:none}
+.work-page .work-controls{top:16px;background:transparent;padding-block:8px 18px;margin-bottom:40px}
+.work-controls .work-toolbar{padding-top:0}
+.work-page .work-controls .work-type-toolbar{min-width:0;justify-content:flex-start;gap:24px;margin-top:12px}
+.work-page .work-demo-note{margin:0 0 16px}
+.work-page .type-filter-dropdown{flex:none}
+.work-controls #type-filters{flex-shrink:1}
+.timeline-toolbar .timeline-years{margin:0}
+.composition-control.glass-tabs{margin-inline:auto}
+@supports not (backdrop-filter:blur(1px)){
+ :is(.glass-tabs,#year-filters,#type-filters).glass-tabs{background:linear-gradient(#fafafbf5,#eeeef2f5,#fafafbf5)}
+}
+@media(max-width:700px){
+ :is(.glass-tabs,#year-filters,#type-filters).glass-tabs{--tab-height:32px;--tab-inset:4px}
+ :is(.glass-tabs,#year-filters,#type-filters).glass-tabs>:is(a,button){padding-inline:12px;font-size:11px}
+ .work-page .work-controls{top:12px;padding-block:4px 12px;margin-bottom:28px}
+ .work-page .work-controls .work-type-toolbar{align-items:flex-start;flex-direction:column;gap:12px}
+ #year-filters.glass-tabs{width:100%}
+ #type-filters.glass-tabs{width:100%}
+ .work-controls #type-filters{gap:0}
+ .work-controls #type-filters button{padding-inline:12px}
+ /* Keep every series destination in a single, fully visible mobile row. */
+ :is(.glass-tabs,#year-filters,#type-filters).graduation-project-links{display:flex;flex-wrap:nowrap;width:100%;gap:0;overflow:visible;justify-content:normal;margin-inline:auto}
+ :is(.glass-tabs,#year-filters,#type-filters).graduation-project-links>a{flex:1 1 0;min-width:0;flex-direction:column;gap:3px;height:44px;min-height:44px;padding:4px 2px;font-size:clamp(9px,2.6vw,12px);white-space:nowrap;text-align:center}
+ .graduation-project-links.glass-tabs small{font-size:clamp(8px,2.1vw,10px);white-space:nowrap}
+ .graduation-project-links.glass-tabs a>span{max-width:100%;white-space:normal;line-height:1.2}
+ .composition-control.glass-tabs button{padding-inline:12px}
+ .composition-control.glass-tabs button span{font-size:9px}
+ .timeline-years.glass-tabs{max-width:100%;overflow-x:auto}
+}
+@media(prefers-reduced-motion:reduce){
+ :is(.glass-tabs,#year-filters,#type-filters).glass-tabs>:is(a,button){transition:none}
+}
+
+/* Graduation projects share a short, single-line type switcher. */
+.type-filter-dropdown{position:relative;width:max-content;max-width:100%}
+.type-filter-dropdown .glass-tabs>#type-filter-toggle{gap:12px;min-width:126px;justify-content:space-between}
+.type-filter-chevron{flex:none;transition:transform .18s ease}
+#type-filter-toggle[aria-expanded=true] .type-filter-chevron{transform:rotate(180deg)}
+#type-filters.glass-tabs[hidden]{display:none}
+#type-filters.glass-tabs{
+ position:absolute;top:calc(100% + 8px);left:0;z-index:40;
+ display:flex;flex-direction:column;align-items:stretch;
+ width:240px;max-width:calc(100vw - 12vw);gap:2px;padding:6px;
+ border-radius:22px;background:linear-gradient(180deg,#fffffff0,#f5f4eee8);
+ overflow-y:auto;max-height:min(360px,55svh);scrollbar-width:thin;
+}
+#type-filters.glass-tabs>button{width:100%;min-height:40px;height:40px;justify-content:space-between;gap:16px;padding:0 14px;border-radius:16px;font-size:12px}
+#type-filters.glass-tabs>button::after{content:"✓";opacity:0}
+#type-filters.glass-tabs>button[aria-pressed=true]::after{opacity:1}
+@media(prefers-reduced-motion:reduce){.type-filter-chevron{transition:none}}
+
+.graduation-project-nav>.project-series-title{margin:0 0 10px;font-size:12px;line-height:1.5;font-weight:400;letter-spacing:.03em;color:var(--muted)}
+:is(.glass-tabs,#year-filters,#type-filters).graduation-project-links.is-compact{--tab-height:36px}
+:is(.glass-tabs,#year-filters,#type-filters).graduation-project-links.is-compact>a{height:var(--tab-height);min-height:var(--tab-height);flex-direction:row;gap:0;padding:0 20px;font-size:12px;white-space:nowrap}
+@media(max-width:700px){
+ :is(.glass-tabs,#year-filters,#type-filters).graduation-project-links.is-compact>a{padding-inline:4px}
+}
+
+/* Phones use a dropdown; wider screens expose every type directly. */
+@media(min-width:701px){
+ .work-page .type-filter-dropdown>.glass-tabs:has(#type-filter-toggle){display:none}
+ .work-page .type-filter-dropdown #type-filters.glass-tabs{
+  position:static;display:inline-flex;flex-direction:row;align-items:center;flex-wrap:wrap;
+  width:max-content;max-width:100%;max-height:none;overflow:visible;gap:0;padding:var(--tab-inset);
+  border-radius:calc(var(--tab-height)/2 + var(--tab-inset) + 1px);
+  background:linear-gradient(180deg,#ffffffb8 0%,#eeedf25c 42%,#ffffffa8 100%);
+ }
+ .work-page #type-filters.glass-tabs>button{
+  width:auto;height:var(--tab-height);min-height:var(--tab-height);padding:0 16px;
+  border-radius:calc(var(--tab-height)/2);justify-content:center;gap:0;
+ }
+ .work-page #type-filters.glass-tabs>button::after{display:none}
+}

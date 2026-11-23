@@ -1,0 +1,45 @@
+/* Isolated review copy — preserves the portfolio's type and image system. */
+.work-card-caption{display:flex;align-items:baseline;gap:12px;margin-top:18px}
+.work-card-caption h3{font-size:15px;line-height:1.6;font-weight:500;letter-spacing:0}
+.work-card-caption>span{flex-shrink:0;font-size:12px}
+.work-outputs{display:block;font-size:12px;line-height:1.8;margin:5px 0 0;color:var(--muted)}
+.work-card-image{background:#eeede7;border-radius:3px}
+.work-card-image img,.work-card-image svg{filter:drop-shadow(0 8px 8px #37352c12)}
+.work-card-image>span{font-size:11px}
+.timeline-axis{padding-bottom:42px}
+.timeline-month.timeline-nearby{margin-left:0}
+.timeline-work+.timeline-work{margin-left:24px}
+.timeline-work .timeline-month-label{left:50%;bottom:-30px;transform:translateX(-50%);font-size:12px;line-height:20px;letter-spacing:.04em;color:var(--ink)}
+.timeline-work img{transform:rotate(0deg)}
+.timeline-month{padding-right:32px}
+.about-copy>.eyebrow{display:block;margin:0 0 24px;font-size:11px;letter-spacing:2px}
+.about-portrait{grid-row:1;align-self:start}
+.about-copy{grid-row:1}
+.detail-heading{justify-content:flex-start;align-items:flex-start;flex-direction:column;gap:12px}
+.detail-heading>span{font-size:12px;line-height:1.8}
+.detail-heading h1.optical-title{margin-left:-.45em}
+.project-tools{flex-wrap:wrap;justify-content:flex-end;gap:6px;min-width:0}
+.project-tools li{width:auto;height:auto;flex:0 1 auto;border:1px solid var(--line);border-radius:100px;padding:5px 10px}
+.project-tools .project-tool-label{font:inherit;font-size:11px;line-height:1.5;white-space:nowrap;color:var(--muted)}
+.project-topbar{align-items:flex-start}
+.hero .composition-control #orbit-pause{position:static;border-left:1px solid var(--line);border-radius:0;min-width:72px;font-size:11px;letter-spacing:0}
+.hero.is-grouped #orbit-pause,.hero.is-timeline #orbit-pause{display:none}
+@media(min-width:701px){
+ .hero .category-label[data-category=book]{left:31%;top:82%}
+ .hero .category-label[data-category=space]{left:69%;top:82%}
+}
+@media(max-width:700px){
+ .work-card-caption{flex-direction:column;gap:2px;margin-top:12px}
+ .work-card-caption h3{font-size:13px}
+ .work-card-caption>span,.work-outputs{font-size:11px}
+ .timeline-work+.timeline-work{margin-left:20px}
+ .timeline-month.timeline-nearby{margin-left:0}
+ .about-copy>.eyebrow{margin-bottom:20px}
+ .hero .composition-control button{padding:10px 9px}
+ .hero .composition-control #orbit-pause{min-width:58px;padding:10px 8px}
+ .project-topbar{gap:16px}
+ .project-tools{max-width:65%}
+ .project-tools li{padding:4px 8px}
+}
+.project-tools{width:auto;max-width:65%}
+.project-tools .project-tool-label{display:block;width:auto;height:auto;overflow-wrap:normal}
