@@ -136,11 +136,11 @@ const ringParts=['back','front'].map(side=>{
 const ringMoon=document.createElement('i');ringMoon.className='planet-ring-moon';ringMoon.setAttribute('aria-hidden','true');hero.insertBefore(ringMoon,field);
 function paint(){
  const w=hero.clientWidth,h=hero.clientHeight,mobile=w<=700;
- const top=mobile?235:265,bottom=document.querySelector('.hero-bottom').offsetTop-24;
+ const top=mobile?245:280,bottom=document.querySelector('.hero-bottom').offsetTop-24;
  hero.style.setProperty('--gather-label-limit',`${bottom-24}px`);
  const orbitCompact=mobile?.82:1;
  const stage=Math.max(160,bottom-top),cy=(top+bottom)/2-h/2,radius=Math.min(w*.34,stage*.36)*orbitCompact;
- const radiusX=Math.min(radius*(mobile?1.06:1.65),w*(mobile?.36:.33));
+ const radiusX=Math.min(radius*(mobile?1.10:1.95),w*(mobile?.36:.39));
  const c=Math.cos(orbitAngle),s=Math.sin(orbitAngle);
  // Batch layout reads before rendering any artwork.
  const sizes=books.map(book=>({width:book.offsetWidth,height:book.offsetHeight}));
@@ -157,7 +157,9 @@ function paint(){
   const p=clamp((progress-i*.012)/(1-i*.012),0,1),blend=1-p;
   const baseSize=Math.min(mobile?100:165,radius*.68),baseScale=baseSize/sizes[i].width*(items[i].project.phoneMockup?.65:1);
   const orbitSize=items[i].project.id==='poti'?1.35:items[i].project.id==='the-seventh-day'?1.3:1;
-  let px=x*radiusX,py=point.y*radius,scale=baseScale*(.36+.70*depth)*orbitSize;
+  // Perspective strengthens the foreground without washing out the far artwork.
+  const perspective=.44+.78*Math.pow(depth,1.3);
+  let px=x*radiusX,py=point.y*radius,scale=baseScale*perspective*orbitSize;
   scale*=1+.5*orbitEmphasis[i];
   const v=groupedPosition(i,mobile),category=items[i].category,amount=dockAmounts[category]*p;
   if(items[i].project.id==='poti')v[3]*=1.4;
@@ -196,7 +198,10 @@ function paint(){
   });
   book.hidden=false;
   book.style.transform=`translate(-50%,-50%) translate3d(${px*blend+v[0]*w*p}px,${(py+cy)*blend+groupY*p}px,0) rotate(${v[2]*p}deg) scale(${scale*blend+groupScale*p})`;
-  book.style.opacity=String((.30+depth*.70)*blend+p);
+  book.style.opacity=String((.76+depth*.24)*blend+p);
+  const distance=(1-depth)*blend*(1-orbitEmphasis[i]);
+  book.style.setProperty('--orbit-saturation', String(1-distance*.22));
+  book.style.setProperty('--orbit-blur', `${(mobile?0:.32)*distance}px`);
   book.style.zIndex=orbitEmphasis[i]>.01&&progress<.5?'180':String(Math.round(depth*80*blend+(i+1)*p)+(amount>.01?90:0)+(['haidian-jiwa','jiwa-gashapon'].includes(items[i].project.id)?Math.round(30*p):0));
   book.href=progress>=.5?`work.html?type=${category}`:`project.html?id=${encodeURIComponent(items[i].project.id)}`;
   book.setAttribute('aria-label',progress>=.5?`浏览${window.designCategories.find(c=>c.id===category).label}作品`:`${items[i].project.title}，点击查看详情`);
@@ -285,7 +290,7 @@ field.addEventListener('pointerover',e=>{orbitSelected=e.target.closest('.book')
 field.addEventListener('pointerout',e=>{orbitSelected=e.relatedTarget?.closest?.('.book')||null;startAnimation()});
 field.addEventListener('focusin',e=>{orbitHover=true;orbitSelected=e.target.closest('.book');startAnimation()});
 field.addEventListener('focusout',()=>{orbitHover=false;orbitSelected=null;startAnimation()});
-orbitPause.addEventListener('click',()=>{orbitPaused=!orbitPaused;orbitPause.setAttribute('aria-pressed',String(orbitPaused));orbitPause.textContent=orbitPaused?'继续 ↻':'暂停 Ⅱ';orbitPause.setAttribute('aria-label',orbitPaused?'继续自动旋转':'暂停自动旋转');startAnimation()});
+orbitPause.addEventListener('click',()=>{orbitPaused=!orbitPaused;orbitPause.setAttribute('aria-pressed',String(orbitPaused));orbitPause.innerHTML=orbitPaused?'<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="m5 3 8 5-8 5Z" fill="currentColor"/></svg>':'<svg width="14" height="14" viewBox="0 0 16 16" fill="none" aria-hidden="true"><path d="M5 3v10M11 3v10" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/></svg>';orbitPause.setAttribute('aria-label',orbitPaused?'继续自动旋转':'暂停自动旋转');startAnimation()});
 addEventListener('visibilitychange',()=>{orbitLast=0;startAnimation()});
 new IntersectionObserver(entries=>{if(entries[0].isIntersecting){orbitLast=0;startAnimation()}}).observe(hero);
 

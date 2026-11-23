@@ -1,0 +1,26 @@
+/* Preview only: preserve the editorial system and existing interactions. */
+:root{--orbit-shadow:drop-shadow(0 12px 18px #24272012);--control-edge:rgba(36,39,32,.08)}
+.hero .hero-copy{top:128px}
+.hero .book,.hero .book:hover{filter:saturate(var(--orbit-saturation,1)) blur(var(--orbit-blur,0px)) var(--orbit-shadow)}
+.header nav{gap:32px}
+.header nav a{display:inline-flex;align-items:baseline;gap:5px}
+.header nav a span{margin-left:0;font-size:9px;letter-spacing:.04em;color:var(--muted)}
+#home .hero .composition-control.glass-tabs{background:rgba(250,250,247,.66);border:1px solid var(--control-edge);box-shadow:0 6px 28px #24272006,inset 0 1px 0 #ffffffa6;-webkit-backdrop-filter:blur(18px);backdrop-filter:blur(18px);--tab-height:38px}
+#home .hero .composition-control.glass-tabs button{min-height:44px;box-shadow:none}
+#home .hero .composition-control.glass-tabs button[aria-pressed=true]{background:var(--ink);color:var(--paper);font-weight:500;-webkit-backdrop-filter:none;backdrop-filter:none}
+#home .hero .composition-control.glass-tabs button[aria-pressed=true] span{color:inherit;opacity:.8}
+#home .hero .composition-control #orbit-pause{border-left-color:var(--control-edge)}
+.my-word::after{border-bottom-width:1.5px;opacity:.45;bottom:-.14em}
+@media(max-width:700px){
+ .hero .hero-copy{top:114px}
+ .header nav{gap:18px}
+ .header nav a{gap:4px}
+ #home .hero .composition-control.glass-tabs button{padding-inline:10px}
+}
+@media(prefers-reduced-transparency:reduce){#home .hero .composition-control.glass-tabs{background:var(--paper);backdrop-filter:none}}
+/* Pause is a utility, rather than a second selected arrangement. */
+#home .hero .composition-control #orbit-pause[aria-pressed=true]{background:transparent;color:var(--muted);font-weight:500}
+
+#home .hero .composition-control #orbit-pause{min-width:44px;width:44px;padding:0;display:inline-flex;align-items:center;justify-content:center}
+/* Non-orbit modes have no playback control or reserved segment. */
+#home .hero:is(.is-grouped,.is-timeline) .composition-control #orbit-pause{display:none}

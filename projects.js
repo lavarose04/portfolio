@@ -20,7 +20,7 @@ window.portfolioProjects[realBookIndex]={
  specs:[['装帧方式','裸脊锁线'],['开本','130 × 130 mm'],['页数','96 页'],['完成年份','2026']],
  introduction:'本书以电影《宇宙探索编辑部》的角色“孙一通”笔下的诗为主要内容进行编排。诗文的内容大多朦胧而抽象，因此书中通过梦幻、超现实的图片以及文字设计，呈现出一种梦核的不真实感。',
  eclipse:'日食作为影片高潮的线索，串联起整本书。除了封面的镂空效果，在每一个章节的页面边缘都会有一个小小的圆孔象征日食，并随着阅读的推进逐渐扩大，形成连续的视觉变化。',
- process:'《宇宙探索编辑部》是我一直很喜欢的电影，我对它的喜欢和孙一通的诗一样模糊朦胧，我希望把这种感觉通过书籍呈现出来。书本的开本在130*130mm，小巧的同时也有一定的厚度。制作的过程就是把阅读文字后第一印象想到的画面记录下来，然后思考在具体的内页中应该如何与结合文字布局，再用不同的工具处理具体图片。',
+ process:'《宇宙探索编辑部》是我一直很喜欢的电影，我对它的喜欢和孙一通的诗一样模糊朦胧，我希望把这种感觉通过书籍呈现出来。书本的开本在130 × 130 mm，小巧的同时也有一定的厚度。制作的过程就是把阅读文字后第一印象想到的画面记录下来，然后思考在具体的内页中应该如何与结合文字布局，再用不同的工具处理具体图片。',
  material:'内页中配合文字也有镂空、综合材料的变化，丰富了阅读的体验，让读者能进一步感受孙一通的“外星人”世界。'
 };
 
@@ -43,7 +43,7 @@ window.portfolioProjects[realPosterIndex]={
 const realIPIndex=window.portfolioProjects.findIndex(p=>p.year===2026&&p.primaryCategory==='ip');
 window.portfolioProjects[realIPIndex]={
  id:'haidian-jiwa',aliases:['2026-1'],year:2026,yearConfirmed:true,
- tools:['gpt','gemini','jimeng','ps','procreate','blender','hunyuan'],
+ tools:['gpt','gemini','jimeng','procreate','blender','hunyuan'],
  primaryCategory:'ip',types:['ip'],title:'海淀鸡娃',outputs:['IP形象设计'],
  relatedProjects:['jiwa-gashapon','huangzhuang-dream','super-jiwa'],
  image:'assets/haidian-jiwa/cover.png',isReal:true,format:'ip'

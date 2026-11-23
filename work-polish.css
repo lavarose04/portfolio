@@ -1,0 +1,26 @@
+/* Archive refinements, isolated to this local review. */
+.work-page .work-controls{min-height:var(--filter-reserved-height,138px);pointer-events:none}
+.work-controls>*{pointer-events:auto}
+body.work-page .work-controls :is(#year-filters,#type-filters,.glass-tabs){background:rgba(248,247,244,.92);border:1px solid rgba(36,39,32,.10);box-shadow:inset 0 0 0 1px rgba(255,255,255,.8),0 5px 22px #24272008;-webkit-backdrop-filter:blur(16px);backdrop-filter:blur(16px);color:var(--ink)}
+body.work-page .work-controls :is(#year-filters,#type-filters,.glass-tabs) button{color:var(--ink)}
+.filter-summary{display:none;align-items:center;gap:12px;min-height:44px;padding:0 18px;border-radius:999px;border:1px solid #2427201a;background:rgba(248,247,244,.94);box-shadow:inset 0 0 0 1px #ffffffcc,0 5px 22px #24272008;backdrop-filter:blur(16px);font-family:inherit;font-size:12px;font-weight:500;line-height:1.4;cursor:pointer}
+.filter-summary span{color:var(--muted);font-size:11px}
+.filters-docked:not(.filters-open) .filter-summary{display:inline-flex}
+.filters-docked:not(.filters-open)>:is(.work-toolbar,.work-type-toolbar){display:none}
+.work-page .work-card .work-card-image>:is(img,svg){position:absolute;inset:11%;width:78%;height:78%;object-fit:contain;object-position:center;transform:none;transition:transform 400ms cubic-bezier(.22,1,.36,1)}
+.work-card .work-card-image>span{opacity:0;transform:translateY(3px);transition:opacity 220ms,transform 220ms;pointer-events:none}
+.work-card:is(:hover,:focus-visible) .work-card-image>span{opacity:1;transform:translateY(0)}
+.work-card:is(:hover,:focus-visible) .work-card-image>:is(img,svg){transform:scale(1.03)}
+/* A faint glass ring lets the video artwork keep its color. */
+.work-card-image .video-cover-play{width:44px;background:#ffffff24;border:1px solid #ffffffc9;box-shadow:0 3px 14px #24272012;backdrop-filter:blur(8px);transition:transform 250ms}
+.work-card-image .video-cover-play::after{width:14px;height:17px;margin-left:3px;background:none;clip-path:none;background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 16 20'%3E%3Cpath d='M2 2L14 10L2 18Z' fill='none' stroke='white' stroke-width='1.5' stroke-linejoin='round'/%3E%3C/svg%3E");background-size:contain;background-repeat:no-repeat}
+.work-card:is(:hover,:focus-visible) .video-cover-play{transform:translate(-50%,-50%) scale(1.06)}
+@media(hover:none){.work-card .work-card-image>span{display:none}}
+@media(max-width:700px){.work-page .work-controls{min-height:var(--filter-reserved-height,120px)}.work-card-image .video-cover-play{width:34px}}
+@media(prefers-reduced-motion:reduce){.work-card .work-card-image>:is(img,svg,span),.work-card-image .video-cover-play{transition:none}.work-card:is(:hover,:focus-visible) .work-card-image>:is(img,svg){transform:none}}
+
+/* Keep the gaps between filter rows and dropdown inside the hover corridor. */
+.work-page .work-controls.filters-open{pointer-events:auto}
+.type-filter-dropdown:has(#type-filter-toggle[aria-expanded=true])::after{content:"";position:absolute;top:100%;left:0;width:100%;height:10px;pointer-events:auto}
+/* Give the dense type specimen a little more surrounding paper. */
+.work-page .work-card[data-project-id="quanying-type"] .work-card-image>img{inset:18%;width:64%;height:64%}

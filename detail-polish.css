@@ -1,0 +1,20 @@
+/* Tools describe the making process; they are not controls. */
+.project-topbar .project-tools{display:block;text-align:right;width:auto;max-width:65%;margin:0;padding:0;list-style:none}
+.project-topbar .project-tools li{display:inline-block;vertical-align:baseline;white-space:nowrap;flex:0 1 auto;width:auto;height:auto;min-height:0;border:0;border-radius:0;padding:0;background:none;box-shadow:none}
+.project-topbar .project-tools li:not(:last-child)::after{content:'/';margin:0 9px;color:var(--line)}
+.project-topbar .project-tools .project-tool-label{display:inline;width:auto;height:auto;font-size:11px;line-height:1.8;color:var(--muted);white-space:normal}
+.next-project{display:flex;justify-content:space-between;align-items:center;gap:24px;padding:30px 0;margin:56px 0 28px;border-top:0;border-bottom:1px solid var(--line);text-decoration:none}
+.next-project-label{display:block;font-size:11px;letter-spacing:.08em;color:var(--muted);margin-bottom:10px}
+.next-project strong{font-size:clamp(20px,2.4vw,32px);font-weight:500;line-height:1.5}
+.next-project-arrow{font-size:28px;transition:transform .2s}
+.next-project:hover .next-project-arrow{transform:translateX(4px)}
+@media(max-width:700px){.project-topbar .project-tools{max-width:60%}.project-topbar .project-tools li:not(:last-child)::after{margin:0 6px}.next-project{margin-top:36px;padding:24px 0}}
+@media(prefers-reduced-motion:reduce){.next-project-arrow{transition:none}}
+
+/* Poti has its discipline in the eyebrow; omit the repeated subtitle. */
+#project-detail.poti-detail .detail-heading>span{display:none}
+/* Poti's early sketch sits lightly on the paper. */
+#project-detail.poti-detail .poti-sketch{width:80%;max-width:calc(var(--text-column) * .8);margin-inline:auto;mix-blend-mode:multiply}
+/* The gallery progress already marks this boundary; avoid a second rule. */
+#project-detail .book-carousel+.next-project{border-top:0;margin-top:28px;padding-top:16px}
+@media(max-width:700px){#project-detail .book-carousel+.next-project{margin-top:22px;padding-top:12px}}
