@@ -27,10 +27,10 @@ const projectTools={
 if(!project){
  detail.innerHTML='<h1>暂未找到这个作品</h1><a class="work-back" href="work.html">返回作品列表 ↗︎</a>';
  }else if(project.format==='pending'){
- document.title=`${project.title} — Li MY`;
+ document.title=`${project.title} — MY Portfolio`;
  detail.innerHTML=`<a class="work-back" href="project.html?id=haidian-jiwa">←︎ 返回海淀鸡娃</a><div class="detail-heading"><div><h1>${project.title}</h1></div></div><p class="detail-note">作品内容待补充。</p>`;
  }else if(project.id==='lost-property'){
- document.title=`${project.title} — Li MY`;
+ document.title=`${project.title} — MY Portfolio`;
  detail.classList.add('photo-project-detail','lost-property-detail');
  const images=project.detailImages;
  const figure=(item,cls='')=>`<figure class="ip-document ${cls}"><a href="${item.original}" aria-label="放大查看：${item.caption}"><img src="${item.src}" alt="${item.caption}" width="${item.width}" height="${item.height}" loading="${item===images[0]?'eager':'lazy'}" decoding="async"></a></figure>`;
@@ -48,7 +48,7 @@ if(!project){
  window.setupBookViewer({label:'情人坡失物簿图片查看',triggers,photos:triggers.map(a=>({original:a.getAttribute('href'),preview:a.querySelector('img').getAttribute('src'),caption:a.querySelector('img').alt}))});
  window.setupBookCarousel(detail.querySelector('.book-carousel'));
  }else if(project.id==='tiangou'){
- document.title=`${project.title} — Li MY`;
+ document.title=`${project.title} — MY Portfolio`;
  detail.classList.add('photo-project-detail','tiangou-detail');
  const imageByNumber=Object.fromEntries(project.detailImages.map(item=>[item.number,item]));
  const cover={src:project.image,original:project.original,caption:'天狗形象',width:1448,height:1086};
@@ -98,7 +98,7 @@ if(!project){
  }else if(project.id==='xiaoshajiang-tea'){
  window.renderTeaProject(detail,project);
  }else if(project.format==='typeface'){
- document.title=`《${project.title}》— Li MY`;
+ document.title=`《${project.title}》— MY Portfolio`;
  document.body.classList.add('book-page');
  document.documentElement.classList.add('book-theme');
  detail.classList.add('book-detail','typeface-detail');
@@ -123,7 +123,7 @@ if(!project){
  const triggers=[...detail.querySelectorAll('figure a')];
  window.setupBookViewer({label:'隶书全瑛体图片查看',triggers,photos:triggers.map(a=>({original:a.getAttribute('href'),preview:a.querySelector('img').getAttribute('src'),caption:a.querySelector('img').alt}))});
  }else if(project.id==='spring-equinox'){
- document.title=`《${project.title}》— Li MY`;
+ document.title=`《${project.title}》— MY Portfolio`;
  document.body.classList.add('book-page');
  document.documentElement.classList.add('book-theme');
  detail.classList.add('book-detail','spring-detail');
@@ -153,7 +153,7 @@ if(!project){
  track.addEventListener('scroll',()=>{counter.textContent=`${pageIndex()+1} / 11`},{passive:true});
  let resizeFrame;window.addEventListener('resize',()=>{cancelAnimationFrame(resizeFrame);resizeFrame=requestAnimationFrame(()=>{track.scrollTo({left:(Number(counter.textContent.split('/')[0])-1)*track.clientWidth,behavior:'instant'})})});
  }else if(project.id==='the-seventh-day'){
- document.title=`《${project.title}》— Li MY`;
+ document.title=`《${project.title}》— MY Portfolio`;
  document.body.classList.add('book-page');
  document.documentElement.classList.add('book-theme');
  detail.classList.add('book-detail','seventh-detail');
@@ -177,7 +177,7 @@ if(!project){
  window.setupBookViewer({label:'《第七天》实拍与海报',triggers,photos:triggers.map(a=>({original:a.getAttribute('href'),preview:a.querySelector('img').getAttribute('src'),caption:a.querySelector('img').alt}))});
  window.setupBookCarousel(detail.querySelector('.book-carousel'));
  }else if(project.id==='tranquil-utopia'||project.id==='united-nations-candidate'){
- document.title=`${project.title} — Li MY`;
+ document.title=`${project.title} — MY Portfolio`;
  const isUtopia=project.id==='tranquil-utopia';
  detail.classList.add('media-project-detail',isUtopia?'utopia-detail':'candidate-detail');
  const heading=`<a class="work-back" href="work.html?year=${project.year}&type=${project.primaryCategory}">←︎ 返回作品列表</a><div class="detail-heading"><div><p class="eyebrow">DIGITAL & NEW MEDIA / ${window.formatProjectDate(project)}</p><h1>${project.title}</h1></div><span>${project.outputs.join(' · ')}</span></div>`;
@@ -196,7 +196,7 @@ if(!project){
  `${mediaGallery([{src:'assets/united-nations-candidate/presentation-cover.webp',caption:'United Nations Candidate',width:2000,height:1000}])}${mediaCopy(0,2)}<figure class="candidate-gameplay"><video controls playsinline preload="metadata" poster="assets/united-nations-candidate/details/detail-01.webp" aria-label="新共和国候选人游戏演示视频"><source src="assets/united-nations-candidate/gameplay-demo.mp4" type="video/mp4">你的浏览器无法播放此视频，可<a href="assets/united-nations-candidate/gameplay-demo.mp4">下载游戏演示</a>。</video><figcaption>游戏演示</figcaption></figure><section class="candidate-scenes book-carousel" aria-label="三关场景设定"><div class="scene-pan book-carousel-track" tabindex="0" role="region" aria-label="力量、敏捷与公正三个关卡，可左右拖动、滑动或使用方向键浏览">${levels.map((level,i)=>`<figure class="candidate-scene"><img src="assets/united-nations-candidate/scenes/${level.file||'level-'+(i+1)+'.webp'}" alt="${level.title}完整场景设定图" width="${level.width}" height="${level.height}" loading="lazy" draggable="false"><figcaption>${level.title}</figcaption></figure>`).join('')}</div><p class="book-carousel-hint">↔︎ 左右滑动查看三个关卡</p></section>${mediaCopy(2,4)}${mediaGallery(project.detailImages.slice(4,5))}${mediaGallery(project.detailImages.slice(1,2))}${mediaGallery(project.detailImages.slice(2,4),'candidate-dialogue-pair')}${mediaGallery(project.detailImages.slice(5))}`)+`<div class="book-detail-links"><a class="work-back" href="work.html?year=${project.year}&type=${project.primaryCategory}">继续浏览作品 ↗︎</a><a class="work-back" href="index.html">回到首页 ↗︎</a></div>`;
  detail.querySelectorAll('.book-carousel').forEach(carousel=>window.setupBookCarousel(carousel));
  }else if(project.id==='tianshili-cod-sausage'){
- document.title=`${project.title} — Li MY`;
+ document.title=`${project.title} — MY Portfolio`;
  detail.classList.add('photo-project-detail','coddy-detail');
  const images=project.coddyImages;
  const figure=item=>`<figure class="coddy-image${item.darken?' coddy-darken':''}"><a href="${item.original}" aria-label="放大查看：${item.caption}"><img src="${item.src}" alt="${item.caption}" width="${item.width}" height="${item.height}" loading="lazy" decoding="async"></a><figcaption>${item.caption}</figcaption></figure>`;
@@ -210,7 +210,7 @@ if(!project){
  window.setupBookViewer({label:'力诚儿童鳕鱼肠图片查看',triggers,photos:images.map(item=>({original:item.original,preview:item.src,caption:item.caption}))});
 }else if(project.format==='photo'){
  const category=window.designCategories.find(c=>c.id===project.primaryCategory);
- document.title=`${project.title} — Li MY`;
+ document.title=`${project.title} — MY Portfolio`;
  detail.classList.add('photo-project-detail');
  if(project.phoneMockup)detail.classList.add('phone-project-detail');
  if(project.id==='jiwa-gashapon')detail.classList.add('gashapon-detail');
@@ -236,7 +236,7 @@ if(!project){
  window.setupBookViewer({label:`${project.title}图片查看`,triggers:[...detail.querySelectorAll('.project-supplied-image a,.graduation-media-image a,.ip-exhibition-gallery .ip-document a')],photos:[...(project.videoPrimary?[]:photos),...graduationImages.map(item=>({original:item.original||item.src,preview:item.src,caption:item.caption}))]});
  if(['huangzhuang-dream','jiwa-gashapon'].includes(project.id))window.setupBookCarousel(detail.querySelector('.book-carousel'));
 }else if(project.format==='poster'){
- document.title=`${project.title} — Li MY`;
+ document.title=`${project.title} — MY Portfolio`;
  detail.classList.add('poster-detail');
  detail.innerHTML=`<a class="work-back" href="work.html?year=${project.year}&type=digital">←︎ 返回数字与新媒体</a>
  <div class="detail-heading"><div><p class="eyebrow">DIGITAL & NEW MEDIA / ${window.formatProjectDate(project)}</p><h1>《张春霞相当一般》<br>交互海报</h1></div><span>交互海报 · 交互设计</span></div>
@@ -246,7 +246,7 @@ if(!project){
  ${project.video?`<figure class="poster-demo"><video controls playsinline preload="metadata" poster="${project.image}" aria-label="《张春霞相当一般》交互海报演示视频"><source src="${project.video}" type="video/mp4">你的浏览器无法播放此视频，可<a href="${project.video}">下载演示视频</a>。</video><figcaption>动态与交互演示 / INTERACTION DEMO</figcaption></figure>`:''}
  <div class="book-detail-links"><a class="work-back" href="work.html?year=2026&type=digital">继续浏览数字与新媒体 ↗︎</a><a class="work-back" href="index.html">回到首页 ↗︎</a></div>`;
 }else if(project.format==='ip'){
- document.title=`${project.title} — Li MY`;
+ document.title=`${project.title} — MY Portfolio`;
  detail.classList.add('ip-detail');
  detail.innerHTML=`<a class="work-back" href="work.html?type=ip">←︎ 返回 IP 与角色设计</a>
  <div class="detail-heading"><div><p class="eyebrow">CHARACTER & IP / ${window.formatProjectDate(project)}</p><h1>${project.title}</h1></div><span>IP形象设计</span></div>
@@ -295,7 +295,7 @@ if(!project){
  modelScript.src='ip-models.js?v=97';
  document.head.append(modelScript);
 }else if(project.isReal){
- document.title=`《${project.title}》— Li MY`;
+ document.title=`《${project.title}》— MY Portfolio`;
  document.body.classList.add('book-page');
  document.documentElement.classList.add('book-theme');
  detail.classList.add('book-detail');
@@ -339,7 +339,7 @@ if(!project){
  }
 }else{
  const category=window.designCategories.find(c=>c.id===project.primaryCategory);
- document.title=`${project.title} — MY PORTFOLIO`;
+ document.title=`${project.title} — MY Portfolio`;
  detail.innerHTML=`<a class="work-back" href="work.html?year=${project.year<2024?'earlier':project.year}&type=${project.primaryCategory}">←︎ 返回此类作品</a><div class="detail-heading"><div><p class="eyebrow">${category.english}</p><h1>${project.title}</h1></div><span>${project.year} / 演示年份</span></div><p class="detail-note">作品详情演示 · 当前标题、年份和项目归类为占位，封面复用同一张书籍照片。</p><img class="detail-cover" src="${project.image}" alt="用于演示作品详情的书籍封面照片"><div class="detail-description"><h2>关于作品</h2><div><p>呈现类型：${project.outputs.join(' / ')}</p><p>这里将呈现作品背景、设计思路，以及更多细节图片。</p><p>具体项目资料补充后，再替换此处的占位内容。</p></div></div><a class="work-back" href="index.html">回到首页 ↗︎</a>`;
 }
 const currentProjectSeries=[

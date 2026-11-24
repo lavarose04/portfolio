@@ -24,7 +24,7 @@ window.renderFangshanProject=function(detail,project){
  };
  const copy=(...indices)=>`<div class="book-body">${indices.map(i=>`<p>${project.description[i]}</p>`).join('')}</div>`;
  const heading=(n,en,title)=>`<header class="fangshan-section-heading"><p class="eyebrow">${n} / ${en}</p><h2>${title}</h2></header>`;
- document.title='房山好柿 — Li MY';
+ document.title='房山好柿 — MY Portfolio';
  detail.classList.add('book-detail','fangshan-detail');
  detail.innerHTML=`<a class="work-back" href="work.html?year=2025&type=brand">←︎ 返回品牌与视觉传播</a>
  <div class="detail-heading book-heading"><p class="eyebrow">BRAND & PACKAGING / ${window.formatProjectDate(project)}</p><h1>房山好柿</h1><span class="book-heading-category">品牌设计 · 包装设计</span><div class="book-specs"><p>项目类型：包装设计课程作业</p><p>完成时间：${window.formatProjectDate(project)}</p></div></div>

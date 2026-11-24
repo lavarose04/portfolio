@@ -3,7 +3,7 @@ window.renderTeaProject=function(detail,project){
  const imageSizes={"gift-box-neutral.png":[1468, 1071],"gift-box-original.png": [1184, 864], "cover.webp": [1066, 1800], "pattern-result.png": [588, 544], "textile-reference.png": [644, 342], "gift-box.webp": [746, 534], "element-chrysanthemum.png": [166, 211], "original.png": [7600, 5500], "element-star.png": [155, 144], "hero-packaging.webp": [1076, 1800], "hero-packaging-original.png": [7600, 5500], "element-butterfly.png": [133, 144], "pattern-rose.png": [377, 380], "pattern-chrysanthemum.png": [377, 380], "element-rose.png": [188, 211], "traditional-elements.png": [655, 144], "composition.png": [366, 366], "element-goji.png": [188, 211], "pattern-goji.png": [377, 380], "ingredient-elements.png": [1188, 211], "element-honeysuckle.png": [200, 211], "pattern-honeysuckle.png": [377, 380]};
  const picture=(file,alt,cls='',original=file)=>`<figure class="tea-figure ${cls}"><a href="${base+original}" data-tea-image aria-label="放大查看：${alt}"><img src="${base+file}" alt="${alt}" width="${imageSizes[file][0]}" height="${imageSizes[file][1]}" loading="${cls==='tea-hero'?'eager':'lazy'}" decoding="${cls==='tea-hero'?'sync':'async'}"></a></figure>`;
  const plants=[['honeysuckle','金银花'],['chrysanthemum','菊花'],['rose','玫瑰'],['goji','枸杞']];
- document.title='小沙江 · 金银花自由配方茶 — Li MY';
+ document.title='小沙江 · 金银花自由配方茶 — MY Portfolio';
  detail.classList.add('tea-detail');
  detail.innerHTML=`<a class="work-back" href="work.html?year=2025&type=brand">←︎ 返回品牌与视觉传播</a>
  <div class="detail-heading"><div><p class="eyebrow">BRAND & PACKAGING / ${window.formatProjectDate(project)}</p><h1>小沙江 · 金银花自由配方茶</h1></div><span>品牌设计 · 包装设计</span></div>
