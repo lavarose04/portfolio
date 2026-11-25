@@ -18,8 +18,8 @@
    if(previousMonth!==null&&month&&previousMonth-month<=1)group.classList.add('timeline-nearby');previousMonth=month;
    const label=document.createElement('span');label.className='timeline-month-label';label.textContent=month?`${year}.${String(month).padStart(2,'0')}`:String(year);
    for(const project of works){
-    const link=document.createElement('a');link.className='timeline-work';link.href=`project.html?id=${encodeURIComponent(project.id)}`;link.dataset.projectId=project.id;link.setAttribute('aria-label',`${project.title}，${date(project)}，查看详情`);
-    const image=document.createElement('img');image.src=project.image;image.alt=project.imageAlt||project.title;image.loading='eager';image.draggable=false;
+    const link=document.createElement('a');link.className='timeline-work';link.href=window.portfolioProjectHref(project.id);link.dataset.projectId=project.id;link.setAttribute('aria-label',`${project.title}，${date(project)}，查看详情`);
+    const image=document.createElement('img');image.src=window.portfolioAsset(project.image,480);image.alt=project.imageAlt||project.title;image.loading='lazy';image.draggable=false;
     const index=projects.indexOf(project);link.style.setProperty('--work-lift',`${[20,60,8,42,28][index%5]}px`);link.style.setProperty('--work-angle',`${[-8,9,-5,7,-10][index%5]}deg`);link.append(image);
     const stamp=label.cloneNode(true);link.append(stamp);group.append(link);
    }months.append(group);

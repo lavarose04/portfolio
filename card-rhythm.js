@@ -16,5 +16,5 @@
  const schedule=()=>{if(!frame)frame=requestAnimationFrame(align);};
  new MutationObserver(schedule).observe(results,{childList:true,subtree:true});
  new ResizeObserver(schedule).observe(results);
- addEventListener('resize',schedule);document.fonts.ready.then(schedule);
+ addEventListener('resize',schedule);schedule();document.fonts.ready.then(schedule);
 })();

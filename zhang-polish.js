@@ -1,5 +1,5 @@
 (() => {
- const id=new URL(location.href).searchParams.get('id');
+ const id=window.portfolioProjectId;
  const current=window.portfolioProjects.find(p=>p.id===id||p.aliases?.includes(id));
  if(current?.id!=='zhang-chun-xia')return;
  const detail=document.querySelector('#project-detail');detail.classList.add('zhang-book');

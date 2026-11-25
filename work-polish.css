@@ -24,3 +24,6 @@ body.work-page .work-controls :is(#year-filters,#type-filters,.glass-tabs) butto
 .type-filter-dropdown:has(#type-filter-toggle[aria-expanded=true])::after{content:"";position:absolute;top:100%;left:0;width:100%;height:10px;pointer-events:auto}
 /* Give the dense type specimen a little more surrounding paper. */
 .work-page .work-card[data-project-id="quanying-type"] .work-card-image>img{inset:18%;width:64%;height:64%}
+
+/* The no-JS/first-paint filter geometry matches the enhanced desktop state. */
+@media(min-width:701px){.work-page .work-controls #type-filters[hidden]{display:inline-flex}}

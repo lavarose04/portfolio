@@ -31,26 +31,27 @@ window.setupBookViewer=(options={})=>{
  const viewer=document.createElement('dialog');viewer.className='photo-viewer';viewer.setAttribute('aria-label',options.label||'书籍照片放大查看');
  viewer.innerHTML=`<div class="viewer-toolbar"><p id="viewer-caption" hidden></p><div><button type="button" id="viewer-zoom" aria-pressed="false">原尺寸</button><a id="viewer-original" target="_blank" rel="noopener">查看原图 ↗︎</a><button type="button" id="viewer-close" aria-label="关闭图片查看">关闭 ×</button></div></div><div class="viewer-stage"><img class="viewer-image" alt=""></div><div class="viewer-navigation"><button type="button" id="viewer-prev" aria-label="上一张照片"><span aria-hidden="true">◀</span></button><span id="viewer-counter" aria-live="polite"></span><button type="button" id="viewer-next" aria-label="下一张照片"><span aria-hidden="true">▶</span></button></div>`;
  document.body.append(viewer);
- let currentPhoto=0;
+ let currentPhoto=0,opener=null;
+ const displayPreview=source=>window.portfolioAsset(source,Math.min(2400,innerWidth*(devicePixelRatio||1)));
  const stage=viewer.querySelector('.viewer-stage'),zoom=viewer.querySelector('#viewer-zoom');
  function showPhoto(index){
   currentPhoto=(index+photos.length)%photos.length;
   const {original,preview,caption}=photos[currentPhoto],image=viewer.querySelector('.viewer-image');
-  image.src=preview;image.alt=caption;
+  image.src=displayPreview(preview);image.alt=caption;
   viewer.querySelector('#viewer-caption').textContent=caption;
   viewer.querySelector('#viewer-counter').textContent=`${currentPhoto+1} / ${photos.length}`;
   viewer.querySelector('#viewer-original').href=original;
   stage.classList.remove('is-zoomed');zoom.setAttribute('aria-pressed','false');zoom.textContent='原尺寸';stage.scrollTo(0,0);
  }
- triggers.forEach((button,index)=>button.addEventListener('click',event=>{event.preventDefault();showPhoto(options.photos?index:Number(button.dataset.photoIndex));viewer.showModal();document.body.classList.add('photo-viewer-open')}));
+ triggers.forEach((button,index)=>button.addEventListener('click',event=>{event.preventDefault();opener=button;showPhoto(options.photos?index:Number(button.dataset.photoIndex));viewer.showModal();document.body.classList.add('photo-viewer-open')}));
  viewer.querySelector('#viewer-close').addEventListener('click',()=>viewer.close());
- viewer.addEventListener('close',()=>document.body.classList.remove('photo-viewer-open'));
+ viewer.addEventListener('close',()=>{document.body.classList.remove('photo-viewer-open');opener?.focus({preventScroll:true});});
  viewer.querySelector('#viewer-prev').addEventListener('click',()=>showPhoto(currentPhoto-1));
  viewer.querySelector('#viewer-next').addEventListener('click',()=>showPhoto(currentPhoto+1));
  zoom.addEventListener('click',()=>{
   const expanded=stage.classList.toggle('is-zoomed');
   zoom.setAttribute('aria-pressed',String(expanded));zoom.textContent=expanded?'适应窗口':'原尺寸';
-  const photo=photos[currentPhoto];viewer.querySelector('.viewer-image').src=expanded?photo.original:photo.preview;
+  const photo=photos[currentPhoto];viewer.querySelector('.viewer-image').src=expanded?photo.original:displayPreview(photo.preview);
  });
  viewer.addEventListener('keydown',event=>{if(event.key==='ArrowLeft'){event.preventDefault();showPhoto(currentPhoto-1)}if(event.key==='ArrowRight'){event.preventDefault();showPhoto(currentPhoto+1)}});
 };

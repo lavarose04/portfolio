@@ -2,7 +2,7 @@
  const detail=document.querySelector('#project-detail');
  if(detail){
   const records=window.portfolioProjects||[];
-  const id=new URL(location.href).searchParams.get('id');
+  const id=window.portfolioProjectId;
   const current=records.find(p=>p.id===id||p.aliases?.includes(id));
   // Continue in archive order, prioritizing the current discipline.
   const ordered=records.filter(p=>p.isReal&&p.format!=='pending').sort((a,b)=>b.year-a.year||(b.month||0)-(a.month||0));
@@ -12,7 +12,7 @@
   if(current&&index>=0&&sequence.length>1){
    const next=sequence[(index+1)%sequence.length];
    const link=document.createElement('a');link.className='next-project';
-   link.href=`project.html?id=${encodeURIComponent(next.id)}`;
+   link.href=window.portfolioProjectHref(next.id);
    link.setAttribute('aria-label',`下一篇：${next.title}`);
    const text=document.createElement('span'),label=document.createElement('span'),title=document.createElement('strong'),arrow=document.createElement('span');
    label.className='next-project-label';label.textContent='下一篇 / NEXT PROJECT';title.textContent=next.title;

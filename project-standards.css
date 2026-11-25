@@ -1,4 +1,4 @@
-#project-detail p.project-reading-copy{color:#2c2c2c;line-height:2}
+#project-detail p.project-reading-copy{color:var(--body);line-height:2}
 /* Every image uses one viewing height; natural ratios determine widths. */
 #project-detail .book-carousel{--gallery-image-height:clamp(280px,42.6667vw,58svh)}
 #project-detail .book-carousel .book-carousel-track{display:flex;align-items:flex-start;gap:20px;padding-inline:0}

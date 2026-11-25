@@ -67,7 +67,7 @@ function groupedPosition(i,mobile){
 }
 const books=items.map((_,i)=>{
  const element=document.createElement('a');element.className='book';element.dataset.category=items[i].category;element.dataset.projectId=items[i].project.id;
- element.href=`project.html?id=${encodeURIComponent(items[i].project.id)}`;
+ element.href=window.portfolioProjectHref(items[i].project.id);
  element.setAttribute('aria-label',`${items[i].project.title}，点击查看详情`);
  element.style.setProperty('--float-duration',`${7.2+(i%5)*.8}s`);
  element.style.setProperty('--float-delay',`${-i*1.37}s`);
@@ -77,7 +77,7 @@ const books=items.map((_,i)=>{
  element.addEventListener('focus',()=>{if(progress<.5)showPreview(items[i].project);else{focusedCategory=items[i].category;startAnimation()}});
  element.addEventListener('blur',()=>{hidePreview();focusedCategory=null;startAnimation()});
  element.addEventListener('click',hidePreview);
- element.innerHTML=['poster','ip','photo'].includes(items[i].project.format)?`<img src="${items[i].image}" alt="${items[i].project.title}">`:`<svg viewBox="390 110 1180 985" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="cut-${i}"><polygon points="408,511 1014,126 1549,572 1545,616 919,1079 908,1038 411,551"/></clipPath></defs><image href="${items[i].image}" width="1920" height="1280" ${items[i].project.transparent?'':`clip-path="url(#cut-${i})"`}/></svg>`;
+ window.portfolioSetMarkup(element,['poster','ip','photo'].includes(items[i].project.format)?`<img src="${items[i].image}" alt="${items[i].project.title}">`:`<svg viewBox="390 110 1180 985" xmlns="http://www.w3.org/2000/svg"><defs><clipPath id="cut-${i}"><polygon points="408,511 1014,126 1549,572 1545,616 919,1079 908,1038 411,551"/></clipPath></defs><image href="${items[i].image}" width="1920" height="1280" ${items[i].project.transparent?'':`clip-path="url(#cut-${i})"`}/></svg>`,'orbit');
  if(items[i].project.videoCover){
   element.classList.add('video-piece');
   element.insertAdjacentHTML('beforeend',`<i class="video-cover-play" aria-hidden="true"></i>`);
@@ -124,7 +124,7 @@ const workPixels=items.map((item,i)=>{
    const colors=[...buckets.values()].sort((a,b)=>b.count-a.count);
    pixels.forEach((pixel,j)=>{const color=colors[j?Math.min(3,colors.length-1):0];if(color)pixel.style.backgroundColor=`rgb(${Math.round(color.r/color.count)},${Math.round(color.g/color.count)},${Math.round(color.b/color.count)})`});
   }catch{} // Keep the category palette if an image cannot be sampled.
- };source.src=item.image;return pixels;
+ };source.src=window.portfolioAsset(item.image,480);return pixels;
 });
 const ringParts=['back','front'].map(side=>{
  const svg=document.createElementNS('http://www.w3.org/2000/svg','svg');
@@ -137,7 +137,6 @@ const ringMoon=document.createElement('i');ringMoon.className='planet-ring-moon'
 function paint(){
  const w=hero.clientWidth,h=hero.clientHeight,mobile=w<=700;
  const top=mobile?245:280,bottom=document.querySelector('.hero-bottom').offsetTop-24;
- hero.style.setProperty('--gather-label-limit',`${bottom-24}px`);
  const orbitCompact=mobile?.82:1;
  const stage=Math.max(160,bottom-top),cy=(top+bottom)/2-h/2,radius=Math.min(w*.34,stage*.36)*orbitCompact;
  const radiusX=Math.min(radius*(mobile?1.10:1.95),w*(mobile?.36:.39));
@@ -146,6 +145,7 @@ function paint(){
  const sizes=books.map(book=>({width:book.offsetWidth,height:book.offsetHeight}));
  const heroTop=hero.getBoundingClientRect().top;
  const labels=Object.fromEntries(categories.map(id=>[id,labelContainer.querySelector(`[data-category="${id}"]`).getBoundingClientRect()]));
+ hero.style.setProperty('--gather-label-limit',`${bottom-24}px`);
  const ringScaleX=Math.min(radiusX*3.5,w*.9*orbitCompact)/1000,ringScaleY=Math.min(radius*4.3,w*.9*orbitCompact)/1000,ringOpacity=1-progress;
  ringParts.forEach(ring=>{ring.style.transform=`translate(-50%,-50%) translateY(${cy}px) rotate(-16deg) scale(${ringScaleX},${ringScaleY})`;ring.style.opacity=String(ringOpacity)});
  const moonAngle=2.65-orbitAngle*.45,moonX=Math.cos(moonAngle)*490*ringScaleX,moonY=Math.sin(moonAngle)*70*ringScaleY,tilt=-16*Math.PI/180;
@@ -197,13 +197,15 @@ function paint(){
    pixel.style.width=pixel.style.height=`${(j?5:7)*(1-.25*p)}px`;
   });
   book.hidden=false;
-  book.style.transform=`translate(-50%,-50%) translate3d(${px*blend+v[0]*w*p}px,${(py+cy)*blend+groupY*p}px,0) rotate(${v[2]*p}deg) scale(${scale*blend+groupScale*p})`;
+  const displayScale=scale*blend+groupScale*p;
+  book.style.setProperty('--book-display-scale',String(Math.max(.01,displayScale)));
+  book.style.transform=`translate(-50%,-50%) translate3d(${px*blend+v[0]*w*p}px,${(py+cy)*blend+groupY*p}px,0) rotate(${v[2]*p}deg) scale(${displayScale})`;
   book.style.opacity=String((.76+depth*.24)*blend+p);
   const distance=(1-depth)*blend*(1-orbitEmphasis[i]);
   book.style.setProperty('--orbit-saturation', String(1-distance*.22));
   book.style.setProperty('--orbit-blur', `${(mobile?0:.32)*distance}px`);
   book.style.zIndex=orbitEmphasis[i]>.01&&progress<.5?'180':String(Math.round(depth*80*blend+(i+1)*p)+(amount>.01?90:0)+(['haidian-jiwa','jiwa-gashapon'].includes(items[i].project.id)?Math.round(30*p):0));
-  book.href=progress>=.5?`work.html?type=${category}`:`project.html?id=${encodeURIComponent(items[i].project.id)}`;
+  book.href=progress>=.5?`work.html?type=${category}`:window.portfolioProjectHref(items[i].project.id);
   book.setAttribute('aria-label',progress>=.5?`浏览${window.designCategories.find(c=>c.id===category).label}作品`:`${items[i].project.title}，点击查看详情`);
  });
  const timeline=hero.classList.contains('is-timeline');

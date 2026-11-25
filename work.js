@@ -38,7 +38,12 @@ function navigate(year,type){
  if(type!==selectedType)render(year,type);
  updateURL(year,type);jumpToYear(year);
 }
-function addFilter(parent,id,label,kind){const b=document.createElement('button');b.type='button';b.dataset[kind]=id;b.textContent=label;b.addEventListener('click',()=>{navigate(kind==='year'?id:selectedYear,kind==='type'?id:selectedType);if(kind==='type')setTypeOpen(false,true)});parent.append(b)}
+function addFilter(parent,id,label,kind){
+ const existing=parent.querySelector(`button[data-${kind}="${id}"]`);
+ const b=existing||document.createElement('button');b.type='button';b.dataset[kind]=id;b.textContent=label;
+ b.addEventListener('click',()=>{navigate(kind==='year'?id:selectedYear,kind==='type'?id:selectedType);if(kind==='type')setTypeOpen(false,true)});
+ if(!existing)parent.append(b);
+}
 for(const year of yearOptions)addFilter(filters,year,year==='earlier'?'更早':year,'year');
 addFilter(typeFilters,'all','全部类型','type');
 for(const category of workCategories)addFilter(typeFilters,category.id,category.label,'type');
@@ -46,11 +51,14 @@ function render(year,type){
  selectedYear=year;selectedType=type;
  const currentTypeLabel=workCategories.find(category=>category.id===type)?.label||'全部类型';
  typeLabel.textContent=currentTypeLabel;
+ document.querySelector('.work-feed-end').textContent=type==='all'?'已浏览全部作品':`已浏览${currentTypeLabel}的全部作品`;
  typeToggle.setAttribute('aria-label',`筛选作品类型：${currentTypeLabel}`);
  filters.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.year===year)));
  typeFilters.querySelectorAll('button').forEach(b=>b.setAttribute('aria-pressed',String(b.dataset.type===type)));
  const visible=projects.filter(p=>type==='all'||p.types.includes(type)).sort((a,b)=>b.year-a.year||(b.month||0)-(a.month||0));
  filters.querySelectorAll('button').forEach(b=>b.disabled=!visible.some(p=>b.dataset.year==='earlier'?p.year<2024:String(p.year)===b.dataset.year));
+ if(results.dataset.renderedType===type&&results.children.length)return;
+ results.dataset.renderedType=type;
  results.replaceChildren();
  if(!visible.length){const empty=document.createElement('p');empty.className='work-empty';empty.textContent='这个年份下暂时没有这一类型的作品。试试其他年份或类型。';results.append(empty);return}
  const years=[...new Set(visible.map(p=>p.year))];
@@ -58,10 +66,10 @@ function render(year,type){
   const section=document.createElement('section');section.className='work-year';section.id=`work-year-${y}`;section.dataset.year=y;section.setAttribute('aria-labelledby',`year-${y}`);
   section.innerHTML=`<div class="work-year-heading"><h2 id="year-${y}">${y}</h2><span>${visible.some(p=>p.year===y&&p.isReal)?'':'演示年份'}</span></div><div class="work-grid"></div>`;
   for(const project of visible.filter(p=>p.year===y)){
-   const card=document.createElement('a');card.className='work-card';card.dataset.projectId=project.id;card.dataset.primaryCategory=project.primaryCategory;card.href=`project.html?id=${encodeURIComponent(project.id)}`;
+   const card=document.createElement('a');card.className='work-card';card.dataset.projectId=project.id;card.dataset.primaryCategory=project.primaryCategory;card.href=window.portfolioProjectHref(project.id);
    card.setAttribute('aria-label',`${project.title}，${window.formatProjectDate(project)}${project.isReal?'':' 演示年份'}，作品详情`);
    const cover=['poster','ip','photo','typeface'].includes(project.format)?`<img class="poster-card-cover ${project.format==='ip'?'ip-card-cover':''}${project.phoneMockup?' phone-card-cover':''}" src="${project.image}" alt="${project.title}" loading="lazy">`:null;
-   card.innerHTML=`<div class="work-card-image">${cover||`<svg viewBox="390 110 1180 985" role="img" aria-label="${project.isReal?project.title+'封面':'书籍照片占位'}"><defs><clipPath id="clip-${project.id}"><polygon points="408,511 1014,126 1549,572 1545,616 919,1079 908,1038 411,551"/></clipPath></defs><image href="${project.image}" width="1920" height="1280" ${project.transparent?'':`clip-path="url(#clip-${project.id})"`}/></svg>`}${project.videoCover?`<i class="video-cover-play" aria-hidden="true"></i>`:''}<span>作品详情 →</span></div><div class="work-card-caption"><h3>${project.title}</h3><span>${window.formatProjectDate(project)}</span></div><p class="work-outputs">${project.types.map(id=>workCategories.find(c=>c.id===id)?.label).filter(Boolean).join(' · ')}</p>`;
+   window.portfolioSetMarkup(card,`<div class="work-card-image">${cover||`<svg viewBox="390 110 1180 985" role="img" aria-label="${project.isReal?project.title+'封面':'书籍照片占位'}"><defs><clipPath id="clip-${project.id}"><polygon points="408,511 1014,126 1549,572 1545,616 919,1079 908,1038 411,551"/></clipPath></defs><image href="${project.image}" width="1920" height="1280" ${project.transparent?'':`clip-path="url(#clip-${project.id})"`}/></svg>`}${project.videoCover?`<i class="video-cover-play" aria-hidden="true"></i>`:''}<span>作品详情 →</span></div><div class="work-card-caption"><h3>${project.title}</h3><span>${window.formatProjectDate(project)}</span></div><p class="work-outputs">${project.types.map(id=>workCategories.find(c=>c.id===id)?.label).filter(Boolean).join(' · ')}</p>`,'card');
    section.querySelector('.work-grid').append(card);
   }
   results.append(section);

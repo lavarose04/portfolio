@@ -44,6 +44,13 @@ for(const viewer of models){
   viewer.src=url.href;
  });
 }
+if(models.length&&'IntersectionObserver' in window){
+ await new Promise(resolve=>{
+  const observer=new IntersectionObserver(entries=>{if(entries.some(e=>e.isIntersecting)){observer.disconnect();resolve();}},{rootMargin:'400px 0px'});
+  observer.observe(models[0].closest('.ip-model-stage'));
+ });
+}
+if(matchMedia('(prefers-reduced-motion: reduce)').matches)models.forEach(viewer=>viewer.removeAttribute('auto-rotate'));
 try{
  await import('./assets/vendor/model-viewer.min.js');
 }catch(error){

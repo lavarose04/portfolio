@@ -139,7 +139,7 @@ const candidateIndex=window.portfolioProjects.findIndex(p=>p.year===2025&&p.prim
 const candidateGame={
  id:'united-nations-candidate',aliases:['2025-2'],year:2025,yearConfirmed:true,
  primaryCategory:'digital',types:['digital'],title:'United Nations Candidate（新共和国候选人）',
- outputs:['游戏设计'],tools:['procreate','gpt','unity'],isReal:true,format:'photo',
+ outputs:['游戏设计'],tools:['procreate','gpt','unity','ae'],isReal:true,format:'photo',
  image:'assets/united-nations-candidate/cover.webp',original:'assets/united-nations-candidate/original.png',
  imageAlt:'新共和国候选人游戏画面：紫粉色城市街道、角色与封锁路障'
 };

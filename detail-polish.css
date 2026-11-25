@@ -1,5 +1,5 @@
 /* Tools describe the making process; they are not controls. */
-.project-topbar .project-tools{display:block;text-align:right;width:auto;max-width:65%;margin:0;padding:0;list-style:none}
+.project-topbar .project-tools{flex:1 1 0;min-width:0;display:block;text-align:right;width:auto;max-width:65%;margin:0;padding:0;list-style:none}
 .project-topbar .project-tools li{display:inline-block;vertical-align:baseline;white-space:nowrap;flex:0 1 auto;width:auto;height:auto;min-height:0;border:0;border-radius:0;padding:0;background:none;box-shadow:none}
 .project-topbar .project-tools li:not(:last-child)::after{content:'/';margin:0 9px;color:var(--line)}
 .project-topbar .project-tools .project-tool-label{display:inline;width:auto;height:auto;font-size:11px;line-height:1.8;color:var(--muted);white-space:normal}

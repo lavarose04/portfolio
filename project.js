@@ -2,11 +2,12 @@
 function ipFigure(file,extension,caption,width,height,showCaption=true){
  return `<figure class="ip-document"><a href="assets/haidian-jiwa/${file}.${extension}" target="_blank" rel="noopener" aria-label="放大查看：${caption}（新窗口）"><img src="assets/haidian-jiwa/${file}.webp" alt="${caption}" width="${width}" height="${height}" loading="lazy" decoding="async"></a>${showCaption?`<figcaption>${caption}</figcaption>`:''}</figure>`;
 }
-const projectID=new URL(location.href).searchParams.get('id');
+const projectID=window.portfolioProjectId;
 const projectRecords=[...window.portfolioProjects,...(window.portfolioDraftProjects||[])];
 const project=projectRecords.find(p=>p.id===projectID||p.aliases?.includes(projectID));
 const detail=document.querySelector('#project-detail');
 const projectTools={
+ ae:{name:'Adobe Effect（AE）'},
  jianying:{image:'jianying',viewBox:'0 0 48 48',width:48,height:48,name:'剪映'},
  ai:{image:'ai',viewBox:'100 100 824 824',width:1024,height:1024,name:'Adobe Illustrator'},
  glyphs:{image:'glyphs',viewBox:'50 50 412 412',width:512,height:512,name:'Glyphs'},
@@ -28,7 +29,7 @@ if(!project){
  detail.innerHTML='<h1>暂未找到这个作品</h1><a class="work-back" href="work.html">返回作品列表 ↗︎</a>';
  }else if(project.format==='pending'){
  document.title=`${project.title} — MY Portfolio`;
- detail.innerHTML=`<a class="work-back" href="project.html?id=haidian-jiwa">←︎ 返回海淀鸡娃</a><div class="detail-heading"><div><h1>${project.title}</h1></div></div><p class="detail-note">作品内容待补充。</p>`;
+ detail.innerHTML=`<a class="work-back" href="${window.portfolioProjectHref('haidian-jiwa')}">←︎ 返回海淀鸡娃</a><div class="detail-heading"><div><h1>${project.title}</h1></div></div><p class="detail-note">作品内容待补充。</p>`;
  }else if(project.id==='lost-property'){
  document.title=`${project.title} — MY Portfolio`;
  detail.classList.add('photo-project-detail','lost-property-detail');
@@ -292,7 +293,7 @@ if(!project){
  window.setupBookCarousel(detail.querySelector('.ip-exhibition-gallery'));
  const modelScript=document.createElement('script');
  modelScript.type='text/javascript';
- modelScript.src='ip-models.js?v=97';
+ modelScript.src='ip-models.js?v=20261125audit1';
  document.head.append(modelScript);
 }else if(project.isReal){
  document.title=`《${project.title}》— MY Portfolio`;
@@ -352,7 +353,7 @@ if(project?.relatedProjects?.length&&!currentProjectSeries){
   const section=document.createElement('section');
   section.className='related-projects';
   section.setAttribute('aria-labelledby','related-projects-title');
-  section.innerHTML=`<h2 id="related-projects-title">${project.seriesID==='haidian-jiwa-graduation'?'同一毕设系列':'相关作品'}</h2>${related.map(item=>`<a class="related-project" href="project.html?id=${encodeURIComponent(item.id)}"><h3>${item.title}${['jiwa-gashapon','huangzhuang-dream','super-jiwa'].includes(item.id)?` · ${item.outputs[0]}`:''}</h3></a>`).join('')}`;
+  section.innerHTML=`<h2 id="related-projects-title">${project.seriesID==='haidian-jiwa-graduation'?'同一毕设系列':'相关作品'}</h2>${related.map(item=>`<a class="related-project" href="${window.portfolioProjectHref(item.id)}"><h3>${item.title}${['jiwa-gashapon','huangzhuang-dream','super-jiwa'].includes(item.id)?` · ${item.outputs[0]}`:''}</h3></a>`).join('')}`;
   detail.classList.add('has-related-projects');
   const links=detail.querySelector('.book-detail-links');
   if(links)links.before(section);
@@ -367,7 +368,7 @@ if(currentProjectSeries){
  const labels=currentProjectSeries.labels;
  navigation.innerHTML=`${currentProjectSeries.compact?`<p class="project-series-title">${currentProjectSeries.title}</p>`:''}<div class="graduation-project-links glass-tabs${currentProjectSeries.compact?' is-compact':''}">${currentProjectSeries.ids.map(id=>{
   const item=projectRecords.find(record=>record.id===id);
-  return `<a href="project.html?id=${encodeURIComponent(item.id)}" aria-label="${item.title} · ${labels[id]}" ${item.id===project.id?'aria-current="page"':''}><span>${currentProjectSeries.compact?labels[id]:(currentProjectSeries.names?.[id]||item.title)}</span>${currentProjectSeries.compact?'':`<small>${labels[id]}</small>`}</a>`;
+  return `<a href="${window.portfolioProjectHref(item.id)}" aria-label="${item.title} · ${labels[id]}" ${item.id===project.id?'aria-current="page"':''}><span>${currentProjectSeries.compact?labels[id]:(currentProjectSeries.names?.[id]||item.title)}</span>${currentProjectSeries.compact?'':`<small>${labels[id]}</small>`}</a>`;
  }).join('')}</div>`;
  const heading=detail.querySelector('.detail-heading');
  if(heading)heading.before(navigation);
